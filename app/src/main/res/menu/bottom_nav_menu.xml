@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/subscribe"
+        android:icon="@drawable/bottom_nav_subscribe"
+        android:title="Subscribe" />
+    <item
+        android:id="@+id/recommend"
+        android:icon="@drawable/bottom_nav_recommend"
+        android:title="Recommend" />
+    <item
+        android:id="@+id/local"
+        android:icon="@drawable/bottom_nav_local"
+        android:title="Local" />
+</menu>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    <item-->
+<!--        android:id="@+id/backup"-->
+<!--        android:icon="@drawable/ic_backup"-->
+<!--        android:title="@string/backup"-->
+<!--        app:showAsAction="always" />-->
+
+<!--    <item-->
+<!--        android:id="@+id/delete"-->
+<!--        android:icon="@drawable/ic_delete"-->
+<!--        android:title="@string/delete"-->
+<!--        app:showAsAction="ifRoom" />-->
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"
+        app:showAsAction="always" />
+
+<!--    <item-->
+<!--        android:id="@+id/setting"-->
+<!--        android:icon="@drawable/ic_settings"-->
+<!--        android:title="@string/setting"-->
+<!--        app:showAsAction="never" />-->
+
+</menu>
