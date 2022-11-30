@@ -26,9 +26,9 @@ class SearchActivity : AppCompatActivity() {
 
 //        val historySearch = listOf("电锯人","死亡笔记")
 
-        val historySearch = listOf("")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, historySearch)
-        listView.adapter = adapter
+//        val historySearch = listOf("")
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, historySearch)
+//        listView.adapter = adapter
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(str: String?): Boolean {
@@ -39,7 +39,7 @@ class SearchActivity : AppCompatActivity() {
                 return false
             }
             override fun onQueryTextChange(str: String?): Boolean {
-                adapter.filter.filter(str)
+//                adapter.filter.filter(str)
                 return false
             }
         })

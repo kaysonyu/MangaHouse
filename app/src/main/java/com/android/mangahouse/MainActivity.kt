@@ -1,5 +1,6 @@
 package com.android.mangahouse
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -51,6 +52,10 @@ class MainActivity : AppCompatActivity() {
 //        Glide.with(this)
 //            .load("https://image.mangabz.com/1/511/129538/3_6051.jpg?cid=129538&key=3dfee6cee5de9ec4fabe28e4f4789a65&uk=")
 //            .into(testImage)
+
+//        getdatabt.setOnClickListener {
+//            startActivity(Intent(this, TestActivity::class.java))
+//        }
 
     }
 

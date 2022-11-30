@@ -3,10 +3,12 @@ package com.android.mangahouse
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_manga.*
 import kotlinx.android.synthetic.main.activity_read.*
+import kotlinx.android.synthetic.main.picture_item.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -76,10 +78,10 @@ class ReadActivity : AppCompatActivity() {
 //                        Glide.with(that).load(comicResp.data.get(3)).into(test_)
 //                        tttt.text = comicResp.data.get(3)
 
-                        val layoutManager = GridLayoutManager(that, 1)
-                        contentRecycleView.layoutManager = layoutManager
+//                        val layoutManager = GridLayoutManager(that, 1)
+//                        readView.layoutManager = layoutManager
                         val adapter = PictureAdapter(that, comicResp.image_urls)
-                        contentRecycleView.adapter = adapter
+                        readView.adapter = adapter
                     }
                 }
 

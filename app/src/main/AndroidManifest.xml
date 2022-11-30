@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChapterAdapter"></activity>
+        <activity android:name=".ChapterAdapter" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ReadActivity" />
         <activity
