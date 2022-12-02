@@ -97,8 +97,4 @@ class PictureAdapter (val context: Context, val pictureList: List<String>): Recy
 
     override fun getItemCount() = pictureList.size
 
-    fun getDistance(x1: Int, y1: Int, x2: Int, y2: Int): Int {
-        return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2).toDouble()).toInt()
-    }
-
 }

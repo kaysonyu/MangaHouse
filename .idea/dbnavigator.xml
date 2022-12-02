@@ -39,7 +39,9 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="625cebcc-0af5-4785-9bff-71f95cfaf5cb" object-ref="schemas/main/tables/mangas" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="625cebcc-0af5-4785-9bff-71f95cfaf5cb" />
@@ -52,7 +54,9 @@
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="625cebcc-0af5-4785-9bff-71f95cfaf5cb" dataset="main.mangas" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="19c4b801-2817-4691-84cb-f9a67dd693dc" dataset="main.records" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="19c4b801-2817-4691-84cb-f9a67dd693dc" dataset="main.mangas" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -98,7 +102,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="C:\Users\yuki\Desktop\mangahouse.db" schema="main" />
+            <file path="C:\Users\yuki\mangahouse.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
@@ -272,7 +276,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="C:\Users\yuki\mangahouse.db" schema="main" />
+            <file path="C:\Users\yuki\Downloads\mangahouse.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />

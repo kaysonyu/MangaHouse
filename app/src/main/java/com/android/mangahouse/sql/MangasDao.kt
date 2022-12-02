@@ -25,6 +25,16 @@ class MangasDao(context: Context?) {
         db.insert(TABLE, null, values)
     }
 
+    fun updateManga(manga: Manga) {
+        val db = mangaHelper.writableDatabase
+        val values = ContentValues()
+        values.apply {
+            put("chapterNum", manga.chapterNum)
+            put("pageNum", manga.pageNum)
+        }
+        db.update(TABLE, values, "site=? and comicId=?", arrayOf(manga.site, manga.comicId))
+    }
+
     fun deleteManga(manga: Manga) {
         val db = mangaHelper.writableDatabase
         db.delete(TABLE, "site=? and comicId=?", arrayOf(manga.site, manga.comicId))
@@ -44,6 +54,32 @@ class MangasDao(context: Context?) {
         }
         cursor.close()
         return false
+    }
+
+    fun getManga(manga: Manga): Manga {
+        val db = mangaHelper.readableDatabase
+        var mangaQuery: Manga = manga
+        if (isHasManga(manga)) {
+            val cursor: Cursor = db.query(TABLE, null, "site=? and comicId=?", arrayOf(manga.site, manga.comicId), null, null, null)
+            if (cursor.moveToFirst()) {
+                do {
+                    mangaQuery = Manga(
+                        cursor.getString(cursor.getColumnIndex("site")),
+                        cursor.getString(cursor.getColumnIndex("comicId")),
+                        cursor.getString(cursor.getColumnIndex("coverImg")),
+                        cursor.getString(cursor.getColumnIndex("name")),
+                        cursor.getInt(cursor.getColumnIndex("chapterNum")),
+                        cursor.getInt(cursor.getColumnIndex("pageNum"))
+                    )
+                } while (cursor.moveToNext())
+            }
+            cursor.close()
+        }
+        else {
+            mangaQuery = Manga(manga.site, manga.comicId, manga.coverImg, manga.name, 1, 1)
+        }
+
+        return mangaQuery
     }
 
     fun getAll(): List<Manga> {

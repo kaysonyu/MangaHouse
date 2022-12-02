@@ -31,6 +31,7 @@ class SearchResultAdapter (val context: Context, val searchResultList: List<Comi
             val inent = Intent(context, MangaActivity::class.java).apply {
 //                putExtra("comicId", searchResult.comicId)
                 putExtra("comicId", searchResult.comicid)
+                putExtra("site", "dmzj")
             }
             context.startActivity(inent)
         }

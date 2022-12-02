@@ -1,7 +1,11 @@
 package com.android.mangahouse.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android.mangahouse.request.ComicChapterResp
@@ -12,6 +16,7 @@ import com.android.mangahouse.request.ServiceCreator
 import com.android.mangahouse.adapter.ChapterAdapter
 import com.android.mangahouse.sql.MangasDao
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_manga.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,12 +33,15 @@ class MangaActivity : AppCompatActivity() {
         setSupportActionBar(detailToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val site = intent.getStringExtra("site")
         val comicId = intent.getStringExtra("comicId")
+
+        val mangasDao = MangasDao(this)
 
         val searchRespService =
             ServiceCreator.create(
                 ComicSearchService::class.java)
-        if (comicId != null) {
+        if (site != null && comicId != null) {
             val that = this
 //            searchRespService.getComicChapterResp(comicId).enqueue(object : Callback<ComicChapterResp> {
 //                override fun onResponse(call: Call<ComicChapterResp>, response: Response<ComicChapterResp>) {
@@ -87,11 +95,58 @@ class MangaActivity : AppCompatActivity() {
             })
 
             subFab.setOnClickListener {
-                val mangasDao = MangasDao(this)
-                mangasDao.addManga(manga)
+                if (mangasDao.isHasManga(manga)) {
+//                    有->无
+                    Snackbar.make(it, "取消订阅", Snackbar.LENGTH_SHORT)
+                        .setAction("确定") {
+
+                            mangasDao.deleteManga(manga)
+
+                            Glide.with(this).load(R.drawable.ic_to_subscribe).into(subFab)
+                            continueRead.visibility = View.GONE
+
+                        }
+                        .show()
+                }
+                else {
+//                    无->有
+                    Toast.makeText(this, "已订阅", Toast.LENGTH_SHORT).show()
+
+                    mangasDao.addManga(manga)
+
+                    Glide.with(this).load(R.drawable.ic_subscribed).into(subFab)
+                    continueRead.visibility = View.VISIBLE
+
+
+                }
+
 
             }
+
+            continueRead.setOnClickListener {
+                val mangaQuery = mangasDao.getManga(Manga(site, comicId, "", "", 1, 1))
+                Log.d("uuuu", "${mangaQuery.chapterNum}, ${mangaQuery.comicId}")
+                val inent = Intent(this, ReadActivity::class.java).apply {
+                    putExtra("site", "dmzj")
+                    putExtra("comicId", mangaQuery.comicId)
+                    putExtra("chapterId", mangaQuery.chapterNum)
+                }
+
+                this.startActivity(inent)
+            }
+
+
+
+            if (mangasDao.isHasManga(Manga(site, comicId, "", "", 1, 1))) {
+                Glide.with(this).load(R.drawable.ic_subscribed).into(subFab)
+                continueRead.visibility = View.VISIBLE
+            }
+            else {
+                Glide.with(this).load(R.drawable.ic_to_subscribe).into(subFab)
+                continueRead.visibility = View.GONE
+            }
         }
+
 
 
 //        collapsingToolbarLayout.title = mangaName

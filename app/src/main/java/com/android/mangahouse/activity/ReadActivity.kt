@@ -3,12 +3,16 @@ package com.android.mangahouse.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.android.mangahouse.request.ComicContentResp
 import com.android.mangahouse.request.ComicSearchService
 import com.android.mangahouse.R
+import com.android.mangahouse.`object`.Manga
 import com.android.mangahouse.request.ServiceCreator
 import com.android.mangahouse.adapter.PictureAdapter
+import com.android.mangahouse.sql.MangasDao
 import kotlinx.android.synthetic.main.activity_read.*
+import kotlinx.android.synthetic.main.picture_item.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,27 +59,28 @@ import retrofit2.Response
 //}
 
 class ReadActivity : AppCompatActivity() {
-
+    var site: String? = null
+    var comicId: String? = null
+    var chapterId: Int = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read)
 
-        val comicId = intent.getStringExtra("comicId")
-        val chapterId = intent.getIntExtra("chapterId", 1)
+        site = intent.getStringExtra("site")
+        comicId = intent.getStringExtra("comicId")
+        chapterId = intent.getIntExtra("chapterId", 1)
 
+        val site = site
+        val comicId = comicId
+        val chapterId = chapterId
 
-
-        val searchRespService =
-            ServiceCreator.create(
-                ComicSearchService::class.java)
-        if (comicId != null) {
+        val searchRespService = ServiceCreator.create(ComicSearchService::class.java)
+        if (site != null && comicId != null) {
             val that = this
             searchRespService.getComicContentResp(comicId, chapterId).enqueue(object : Callback<ComicContentResp> {
                 override fun onResponse(call: Call<ComicContentResp>, response: Response<ComicContentResp>) {
                     val comicResp = response.body()
                     if (comicResp != null) {
-                        for (list in comicResp.image_urls)
-                            Log.d("yuyuyu", "--${list}--")
 
 //                        Glide.with(that).load(comicResp.data.get(3)).into(test_)
 //                        tttt.text = comicResp.data.get(3)
@@ -88,6 +93,12 @@ class ReadActivity : AppCompatActivity() {
                                 comicResp.image_urls
                             )
                         readView.adapter = adapter
+
+                        val mangasDao = MangasDao(that)
+                        val mangaQuery = mangasDao.getManga(Manga(site, comicId, "", "", 1, 1))
+                        if (mangaQuery.chapterNum == chapterId) {
+                            readView.currentItem = mangaQuery.pageNum - 1
+                        }
                     }
                 }
 
@@ -98,6 +109,22 @@ class ReadActivity : AppCompatActivity() {
             })
         }
     }
+
+    override fun onStop() {
+        val mangasDao = MangasDao(this)
+        val site_ = site
+        val comicId_ = comicId
+        val chapterId_ = chapterId
+        if (site_ != null && comicId_ != null) {
+            if (mangasDao.isHasManga(Manga(site_, comicId_, "", "", 1, 1))) {
+                mangasDao.updateManga(Manga(site_, comicId_, "", "", chapterId_, comicPageNum.text.split('/').get(0).toInt()))
+            }
+
+            Toast.makeText(this, "阅读记录已更新", Toast.LENGTH_SHORT).show()
+        }
+        super.onStop()
+    }
+
 
 
 }

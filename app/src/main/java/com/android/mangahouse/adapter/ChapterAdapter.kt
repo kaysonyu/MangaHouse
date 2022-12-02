@@ -51,6 +51,7 @@ class ChapterAdapter (val context: Context, val comicId: String, val chapterList
         viewHolder.itemView.setOnClickListener {
             val chapter = chapterList[viewHolder.adapterPosition]
             val inent = Intent(context, ReadActivity::class.java).apply {
+                putExtra("site", "dmzj")
                 putExtra("comicId", comicId)
                 putExtra("chapterId", chapter.chapter_number)
             }
