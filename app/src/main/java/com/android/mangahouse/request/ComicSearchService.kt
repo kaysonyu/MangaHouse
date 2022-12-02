@@ -1,5 +1,8 @@
-package com.android.mangahouse
+package com.android.mangahouse.request
 
+import com.android.mangahouse.request.ComicChapterResp
+import com.android.mangahouse.request.ComicContentResp
+import com.android.mangahouse.request.ComicResp
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

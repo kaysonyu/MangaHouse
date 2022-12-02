@@ -1,25 +1,25 @@
-package com.android.mangahouse
+package com.android.mangahouse.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.view.View.MeasureSpec
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.mangahouse.request.ComicChapterResp
+import com.android.mangahouse.request.ComicSearchService
+import com.android.mangahouse.R
+import com.android.mangahouse.`object`.Manga
+import com.android.mangahouse.request.ServiceCreator
+import com.android.mangahouse.adapter.ChapterAdapter
+import com.android.mangahouse.sql.MangasDao
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_manga.*
-import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.fragment_subscribe.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.concurrent.thread
 
 
 class MangaActivity : AppCompatActivity() {
+    lateinit var manga: Manga;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,9 @@ class MangaActivity : AppCompatActivity() {
 
         val comicId = intent.getStringExtra("comicId")
 
-        val searchRespService = ServiceCreator.create(ComicSearchService::class.java)
+        val searchRespService =
+            ServiceCreator.create(
+                ComicSearchService::class.java)
         if (comicId != null) {
             val that = this
 //            searchRespService.getComicChapterResp(comicId).enqueue(object : Callback<ComicChapterResp> {
@@ -61,8 +63,20 @@ class MangaActivity : AppCompatActivity() {
 
                         val layoutManager = GridLayoutManager(that, 3)
                         chapterRecycleView.layoutManager = layoutManager
-                        val adapter = ChapterAdapter(that, comicResp.comicid, comicResp.chapters)
+                        val adapter =
+                            ChapterAdapter(
+                                that,
+                                comicResp.comicid,
+                                comicResp.chapters
+                            )
                         chapterRecycleView.adapter = adapter
+
+                        manga = Manga(comicResp.site,
+                                        comicResp.comicid,
+                                        comicResp.cover_image_url,
+                                        comicResp.name,
+                                        1,
+                                        1)
                     }
                 }
 
@@ -71,6 +85,12 @@ class MangaActivity : AppCompatActivity() {
                 }
 
             })
+
+            subFab.setOnClickListener {
+                val mangasDao = MangasDao(this)
+                mangasDao.addManga(manga)
+
+            }
         }
 
 
@@ -100,4 +120,5 @@ class MangaActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

@@ -1,14 +1,14 @@
-package com.android.mangahouse
+package com.android.mangahouse.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
-import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_manga.*
+import com.android.mangahouse.request.ComicContentResp
+import com.android.mangahouse.request.ComicSearchService
+import com.android.mangahouse.R
+import com.android.mangahouse.request.ServiceCreator
+import com.android.mangahouse.adapter.PictureAdapter
 import kotlinx.android.synthetic.main.activity_read.*
-import kotlinx.android.synthetic.main.picture_item.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -65,7 +65,9 @@ class ReadActivity : AppCompatActivity() {
 
 
 
-        val searchRespService = ServiceCreator.create(ComicSearchService::class.java)
+        val searchRespService =
+            ServiceCreator.create(
+                ComicSearchService::class.java)
         if (comicId != null) {
             val that = this
             searchRespService.getComicContentResp(comicId, chapterId).enqueue(object : Callback<ComicContentResp> {
@@ -80,7 +82,11 @@ class ReadActivity : AppCompatActivity() {
 
 //                        val layoutManager = GridLayoutManager(that, 1)
 //                        readView.layoutManager = layoutManager
-                        val adapter = PictureAdapter(that, comicResp.image_urls)
+                        val adapter =
+                            PictureAdapter(
+                                that,
+                                comicResp.image_urls
+                            )
                         readView.adapter = adapter
                     }
                 }

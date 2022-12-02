@@ -4,13 +4,8 @@
 
         <item
             android:id="@+id/navResource"
-            android:icon="@drawable/nav_location"
-            android:title="MangaResourceSetting" />
-
-        <item
-            android:id="@+id/navReader"
-            android:icon="@drawable/nav_location"
-            android:title="ReaderSetting" />
+            android:icon="@drawable/ic_settings"
+            android:title="设置" />
 
     </group>
 

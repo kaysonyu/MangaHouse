@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/subscribe"
-        android:name="com.android.mangahouse.SubscribeFragment"
+        android:name="com.android.mangahouse.fragment.SubscribeFragment"
         android:label="fragment_subscribe"
         tools:layout="@layout/fragment_subscribe" />
 
     <fragment
         android:id="@+id/recommend"
-        android:name="com.android.mangahouse.RecommendFragment"
+        android:name="com.android.mangahouse.fragment.RecommendFragment"
         android:label="fragment_recommend"
         tools:layout="@layout/fragment_recommend" />
 
     <fragment
         android:id="@+id/local"
-        android:name="com.android.mangahouse.LocalFragment"
+        android:name="com.android.mangahouse.fragment.LocalFragment"
         android:label="fragment_local"
         tools:layout="@layout/fragment_local" />
 

@@ -1,4 +1,4 @@
-package com.android.mangahouse
+package com.android.mangahouse.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.android.mangahouse.request.ComicResp
+import com.android.mangahouse.activity.MangaActivity
+import com.android.mangahouse.R
 import com.bumptech.glide.Glide
 
 class SearchResultAdapter (val context: Context, val searchResultList: List<ComicResp.Data>): RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {

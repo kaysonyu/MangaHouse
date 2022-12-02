@@ -1,4 +1,4 @@
-package com.android.mangahouse
+package com.android.mangahouse.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.android.mangahouse.request.ComicChapterResp
+import com.android.mangahouse.R
+import com.android.mangahouse.activity.ReadActivity
 
 //class ChapterAdapter (val context: Context, val chapterList: List<ComicChapterResp.Data.Chapter>): RecyclerView.Adapter<ChapterAdapter.ViewHolder>() {
 //    inner class ViewHolder (view: View): RecyclerView.ViewHolder(view) {

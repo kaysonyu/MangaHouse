@@ -1,10 +1,10 @@
-package com.android.mangahouse
+package com.android.mangahouse.request
 
 //class ComicResp (val msg: String, val code: Int, val count: Int, val data: List<ComicResp.Data>) {
 //    inner class Data (val comicId: String, val title: String, val author: String, val comicType: String, val descs: String, val cover: String, val updateTime: String)
 //}
 
-class ComicResp (val search_result: List<ComicResp.Data>) {
+class ComicResp (val search_result: List<Data>) {
     inner class Data (val comicid: String,
                       val cover_image_url: String,
                       val name: String,

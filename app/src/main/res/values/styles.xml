@@ -12,4 +12,9 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+<!--    <style name="NavigationDrawerStyle">-->
+<!--        <item name="android:layout_gravity">center</item>-->
+<!--        <item name="android:gravity">center_horizontal</item>-->
+<!--    </style>-->
+
 </resources>

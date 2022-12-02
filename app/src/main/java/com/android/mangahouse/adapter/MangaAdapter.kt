@@ -1,4 +1,4 @@
-package com.android.mangahouse
+package com.android.mangahouse.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.android.mangahouse.`object`.Manga
+import com.android.mangahouse.activity.MangaActivity
+import com.android.mangahouse.R
 import com.bumptech.glide.Glide
 
 class MangaAdapter (val context: Context, val mangaList: List<Manga>): RecyclerView.Adapter<MangaAdapter.ViewHolder>() {
@@ -22,10 +24,9 @@ class MangaAdapter (val context: Context, val mangaList: List<Manga>): RecyclerV
         val viewHolder = ViewHolder(LayoutInflater.from(context).inflate(R.layout.manga_item, parent, false))
 
         viewHolder.itemView.setOnClickListener {
-            var manga = mangaList[viewHolder.adapterPosition]
-            var inent = Intent(context, MangaActivity::class.java).apply {
-                putExtra("manga_name", manga.name)
-                putExtra("manga_image", manga.imageId)
+            val manga = mangaList[viewHolder.adapterPosition]
+            val inent = Intent(context, MangaActivity::class.java).apply {
+                putExtra("comicId", manga.comicId)
             }
             context.startActivity(inent)
         }
@@ -36,8 +37,9 @@ class MangaAdapter (val context: Context, val mangaList: List<Manga>): RecyclerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val manga = mangaList[position]
         holder.mangaName.text = manga.name
-        holder.mangaImage.setImageResource(manga.imageId)
-//        Glide.with(context).load(manga.imageId).into(holder.mangaImage)
+        Glide.with(context)
+            .load(manga.coverImg)
+            .into(holder.mangaImage)
     }
 
     override fun getItemCount() = mangaList.size

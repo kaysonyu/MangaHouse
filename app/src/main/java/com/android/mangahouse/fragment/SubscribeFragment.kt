@@ -1,15 +1,20 @@
-package com.android.mangahouse
+package com.android.mangahouse.fragment
 
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.android.mangahouse.`object`.Manga
+import com.android.mangahouse.R
+import com.android.mangahouse.activity.SearchActivity
+import com.android.mangahouse.adapter.MangaAdapter
+import com.android.mangahouse.sql.MangasDao
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_subscribe.*
 import kotlin.concurrent.thread
@@ -17,20 +22,7 @@ import kotlin.concurrent.thread
 
 class SubscribeFragment : Fragment() {
 
-    val mangas = mutableListOf(Manga("寄生兽", R.drawable.p1), Manga("亚人", R.drawable.p2),
-        Manga("进击的巨人", R.drawable.p3), Manga("死亡笔记", R.drawable.p4), Manga("炎拳", R.drawable.p5),
-        Manga("剑风传奇", R.drawable.p6), Manga("致不灭的你", R.drawable.p7)
-    )
-
     val mangaList = ArrayList<Manga>()
-
-    private fun initManga() {
-        mangaList.clear()
-        repeat(50) {
-            val index = (0 until mangas.size).random()
-            mangaList.add(mangas[index])
-        }
-    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -43,7 +35,12 @@ class SubscribeFragment : Fragment() {
             it.setHomeAsUpIndicator(R.drawable.ic_menu)
         }
 
-        initManga()
+        val mangasDao = MangasDao(activity)
+        mangasDao.getAll().forEach {
+            mangaList.add(it)
+        }
+
+
         val layoutManager = GridLayoutManager(context, 3)
         recycleView.layoutManager = layoutManager
         val adapter = MangaAdapter(mActivity, mangaList)
@@ -52,9 +49,11 @@ class SubscribeFragment : Fragment() {
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
         swipeRefresh.setOnRefreshListener {
             thread {
-                Thread.sleep(2000)
                 activity?.runOnUiThread {
-                    initManga()
+                    mangaList.clear()
+                    mangasDao.getAll().forEach {
+                        mangaList.add(it)
+                    }
                     adapter.notifyDataSetChanged()
                     swipeRefresh.isRefreshing = false
                 }
@@ -135,28 +134,6 @@ class SubscribeFragment : Fragment() {
         }
         return true
     }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-////            R.id.backup -> {
-////                Toast.makeText(this, "Backup", Toast.LENGTH_SHORT).show()
-////            }
-////
-////            R.id.delete -> {
-////                Toast.makeText(this, "Delete", Toast.LENGTH_SHORT).show()
-////            }
-//
-////            R.id.setting -> {
-////                Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show()
-////            }
-//
-//            android.R.id.home -> {
-//                drawerLayout.openDrawer(GravityCompat.START)
-//            }
-//        }
-//
-//        return true
-//    }
 
 
 }

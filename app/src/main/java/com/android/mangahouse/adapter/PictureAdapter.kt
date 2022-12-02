@@ -1,16 +1,14 @@
-package com.android.mangahouse
+package com.android.mangahouse.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Matrix
-import android.graphics.Point
-import android.graphics.RectF
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.android.mangahouse.R
 import com.bumptech.glide.Glide
 import kotlin.math.sqrt
 
@@ -18,6 +16,7 @@ import kotlin.math.sqrt
 class PictureAdapter (val context: Context, val pictureList: List<String>): RecyclerView.Adapter<PictureAdapter.ViewHolder>() {
     inner class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
         val comicPicture: ImageView = view.findViewById(R.id.comicPicture)
+        val comicPageNum: TextView = view.findViewById(R.id.comicPageNum)
     }
 
 //    @SuppressLint("ClickableViewAccessibility")
@@ -87,11 +86,13 @@ class PictureAdapter (val context: Context, val pictureList: List<String>): Recy
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: PictureAdapter.ViewHolder, position: Int) {
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val picture = pictureList[position]
         Glide.with(context)
             .load(picture)
             .into(holder.comicPicture)
+        holder.comicPageNum.text = "${position+1}/${pictureList.size}"
     }
 
     override fun getItemCount() = pictureList.size

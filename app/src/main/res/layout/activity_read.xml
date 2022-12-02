@@ -6,24 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ReadActivity">
-
-<!--    <ImageView-->
-<!--        android:id="@+id/test_"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="80dp" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/tttt"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content" />-->
-
-
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/contentRecycleView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
+    tools:context=".activity.ReadActivity">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/readView"

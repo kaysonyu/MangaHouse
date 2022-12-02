@@ -12,14 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChapterAdapter" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".ReadActivity" />
+        <activity android:name=".adapter.ChapterAdapter" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.ReadActivity" />
         <activity
-            android:name=".MangaActivity"
+            android:name=".activity.MangaActivity"
             android:theme="@style/MangaActivityTheme" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

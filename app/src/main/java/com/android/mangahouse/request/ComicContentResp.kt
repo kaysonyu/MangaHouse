@@ -1,4 +1,4 @@
-package com.android.mangahouse
+package com.android.mangahouse.request
 
 //class ComicContentResp (val msg: String, val code: Int, val count: Int, val data: List<String>)
 

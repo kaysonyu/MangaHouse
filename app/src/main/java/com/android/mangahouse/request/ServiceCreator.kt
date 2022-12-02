@@ -1,4 +1,4 @@
-package com.android.mangahouse
+package com.android.mangahouse.request
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
