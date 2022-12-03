@@ -39,9 +39,7 @@
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="625cebcc-0af5-4785-9bff-71f95cfaf5cb" object-ref="schemas/main/tables/mangas" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="625cebcc-0af5-4785-9bff-71f95cfaf5cb" />

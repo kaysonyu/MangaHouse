@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MangaHouse</string>
+    <string name="app_name">漫画屋</string>
     <string name="delete">Delete</string>
     <string name="setting">Setting</string>
     <string name="backup">Backup</string>

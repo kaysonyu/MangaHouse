@@ -125,7 +125,6 @@ class MangaActivity : AppCompatActivity() {
 
             continueRead.setOnClickListener {
                 val mangaQuery = mangasDao.getManga(Manga(site, comicId, "", "", 1, 1))
-                Log.d("uuuu", "${mangaQuery.chapterNum}, ${mangaQuery.comicId}")
                 val inent = Intent(this, ReadActivity::class.java).apply {
                     putExtra("site", "dmzj")
                     putExtra("comicId", mangaQuery.comicId)
