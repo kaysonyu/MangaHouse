@@ -1,5 +1,6 @@
 package com.android.mangahouse.activity
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.android.mangahouse.request.ComicSearchService
 import com.android.mangahouse.request.ServiceCreator
 import com.android.mangahouse.sql.MangasDao
 import kotlinx.android.synthetic.main.activity_read.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.picture_item.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -103,6 +105,12 @@ class ReadActivity : AppCompatActivity() {
 
             })
         }
+
+        val readSetting = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val screenOrientation = readSetting.getInt("screenOrientation", 0)
+
+        readView.orientation = if (screenOrientation == 0) {RecyclerView.HORIZONTAL}
+                                else {RecyclerView.VERTICAL}
 
         readView.setPageTransformer { page, position ->
             if (position <= 0.0f) {

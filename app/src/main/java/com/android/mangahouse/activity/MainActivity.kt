@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,18 +25,21 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.android.mangahouse.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_select.*
 import kotlinx.android.synthetic.main.nav_header.*
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     val takePhoto = 1
     val fromAlbum = 2
-    val afterCrop = 3
+//    val afterCrop = 3
 
     val profilePic = "photo.jpg"
 
@@ -116,6 +120,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             fromAlbumBtn.setOnClickListener(this)
             cancelBtn.setOnClickListener(this)
         }
+
+        navView.setNavigationItemSelectedListener { item ->
+            when (item.title) {
+                "设置" -> {
+                    item.isCheckable = false
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            true
+        }
+
     }
 
     override fun onClick(v: View?) {
@@ -164,7 +180,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (resultCode == Activity.RESULT_OK) {
 //                    cropPhoto(imageUri)
                     val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
-                    navHeaderIcon.setImageBitmap(rotateIfRequired(bitmap))
+                    val rotateBitmap = rotateIfRequired(bitmap)
+                    rotateBitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(outputImage))
+                    navHeaderIcon.setImageBitmap(rotateBitmap)
                 }
             }
 
