@@ -11,6 +11,7 @@ import com.android.mangahouse.request.ComicSearchService
 import com.android.mangahouse.R
 import com.android.mangahouse.request.ServiceCreator
 import com.android.mangahouse.adapter.SearchResultAdapter
+import com.android.mangahouse.custom_components.OnItemClickListener
 import com.android.mangahouse.sql.RecordsDao
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.activity_search.flHistory
@@ -32,6 +33,11 @@ class SearchActivity : AppCompatActivity() {
         val historyRecords = recordsDao.getAll().reversed()
 //        flHistory.setTextList(historyRecords)
         flHistory.setList(historyRecords)
+        flHistory.setOnItemClickListener (object : OnItemClickListener {
+            override fun onClick(str: String) {
+                searchView.setQuery(str, true)
+            }
+        })
 //        Log.d("hhhh", historyRecords.size.toString())
 //        if (historyRecords.size > 0) {
 //            flHistory.setTextList(historyRecords)

@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -45,6 +46,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        Log.d("uuuu", "${this.resources.displayMetrics.density}, ${resources.displayMetrics.widthPixels}")
 
         val navController = findNavController(R.id.navHostFragment)
         bottomNavView.setupWithNavController(navController)
