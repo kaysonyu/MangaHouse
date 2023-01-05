@@ -57,7 +57,7 @@ class ReadActivity : AppCompatActivity() {
                         adapter.notifyDataSetChanged()
 
                         val mangasDao = MangasDao(that)
-                        val mangaQuery = mangasDao.getManga(Manga(site, comicId, "", "", 1, 1))
+                        val mangaQuery = mangasDao.getManga(Manga(site, "", comicId, "", "", 1, 1))
                         if (mangaQuery.chapterNum == chapterId) {
                             readView.currentItem = mangaQuery.pageNum - 1
                         }
@@ -103,8 +103,8 @@ class ReadActivity : AppCompatActivity() {
         val comicId_ = comicId
         val chapterId_ = chapterId
         if (site_ != null && comicId_ != null) {
-            if (mangasDao.isHasManga(Manga(site_, comicId_, "", "", 1, 1))) {
-                mangasDao.updateManga(Manga(site_, comicId_, "", "", chapterId_, comicPageNum.text.split('/').get(0).toInt()))
+            if (mangasDao.isHasManga(Manga(site_, "", comicId_, "", "", 1, 1))) {
+                mangasDao.updateManga(Manga(site_,"", comicId_, "", "", chapterId_, comicPageNum.text.split('/').get(0).toInt()))
                 Toast.makeText(this, "阅读记录已更新", Toast.LENGTH_SHORT).show()
             }
         }

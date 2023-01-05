@@ -18,7 +18,7 @@ class MySQLiteOpenHelper(context: Context?) : SQLiteOpenHelper(context,
         val sqlStrRecord = "CREATE TABLE IF NOT EXISTS records (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);"
         db.execSQL(sqlStrRecord)
 
-        val sqlStrSub = "CREATE TABLE IF NOT EXISTS mangas (site TEXT, comicId TEXT, coverImg TEXT, name TEXT, chapterNum INTEGER, pageNum INTEGER, PRIMARY KEY(site,comicId) );"
+        val sqlStrSub = "CREATE TABLE IF NOT EXISTS mangas (site TEXT, siteName TEXT, comicId TEXT, coverImg TEXT, name TEXT, chapterNum INTEGER, pageNum INTEGER, PRIMARY KEY(site,comicId) );"
         db.execSQL(sqlStrSub)
     }
 

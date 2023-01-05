@@ -12,6 +12,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="MyBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconSize">35dp</item>
+    </style>
+
 <!--    <style name="NavigationDrawerStyle">-->
 <!--        <item name="android:layout_gravity">center</item>-->
 <!--        <item name="android:gravity">center_horizontal</item>-->

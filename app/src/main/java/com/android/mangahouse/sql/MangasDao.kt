@@ -16,6 +16,7 @@ class MangasDao(context: Context?) {
         val values = ContentValues()
         values.apply {
             put("site", manga.site)
+            put("siteName", manga.siteName)
             put("comicId", manga.comicId)
             put("coverImg", manga.coverImg)
             put("name", manga.name)
@@ -65,6 +66,7 @@ class MangasDao(context: Context?) {
                 do {
                     mangaQuery = Manga(
                         cursor.getString(cursor.getColumnIndex("site")),
+                        cursor.getString(cursor.getColumnIndex("siteName")),
                         cursor.getString(cursor.getColumnIndex("comicId")),
                         cursor.getString(cursor.getColumnIndex("coverImg")),
                         cursor.getString(cursor.getColumnIndex("name")),
@@ -76,7 +78,7 @@ class MangasDao(context: Context?) {
             cursor.close()
         }
         else {
-            mangaQuery = Manga(manga.site, manga.comicId, manga.coverImg, manga.name, 1, 1)
+            mangaQuery = Manga(manga.site, manga.siteName, manga.comicId, manga.coverImg, manga.name, 1, 1)
         }
 
         return mangaQuery
@@ -89,6 +91,7 @@ class MangasDao(context: Context?) {
         if (cursor.moveToFirst()) {
             do {
                 val manga = Manga(cursor.getString(cursor.getColumnIndex("site")),
+                    cursor.getString(cursor.getColumnIndex("siteName")),
                     cursor.getString(cursor.getColumnIndex("comicId")),
                     cursor.getString(cursor.getColumnIndex("coverImg")),
                     cursor.getString(cursor.getColumnIndex("name")),

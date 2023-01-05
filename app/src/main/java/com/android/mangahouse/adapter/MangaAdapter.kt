@@ -18,6 +18,7 @@ class MangaAdapter (val context: Context, val mangaList: List<Manga>): RecyclerV
     inner class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
         val mangaImage: ImageView = view.findViewById(R.id.mangaImage)
         val mangaName: TextView = view.findViewById(R.id.mangaName)
+        val mangaSite: TextView = view.findViewById(R.id.mangaSite)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,6 +39,7 @@ class MangaAdapter (val context: Context, val mangaList: List<Manga>): RecyclerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val manga = mangaList[position]
         holder.mangaName.text = manga.name
+        holder.mangaSite.text = manga.siteName
         Glide.with(context)
             .load(manga.coverImg)
             .into(holder.mangaImage)
