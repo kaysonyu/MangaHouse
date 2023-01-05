@@ -79,7 +79,7 @@ class ReadActivity : AppCompatActivity() {
         val searchRespService = ServiceCreator.create(ComicSearchService::class.java)
         if (site != null && comicId != null) {
             val that = this
-            searchRespService.getComicContentResp(comicId, chapterId).enqueue(object : Callback<ComicContentResp> {
+            searchRespService.getComicContentResp(site, comicId, chapterId).enqueue(object : Callback<ComicContentResp> {
                 override fun onResponse(call: Call<ComicContentResp>, response: Response<ComicContentResp>) {
                     val comicResp = response.body()
                     if (comicResp != null) {

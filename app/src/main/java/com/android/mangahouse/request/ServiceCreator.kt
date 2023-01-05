@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceCreator {
 
 //    private val BASE_URL = "http://api.pingcc.cn/"
-    private val BASE_URL = "http://1.15.228.122:8000/api/dmzj/"
+    private val BASE_URL = "http://comic.ykdev.top/"
 
 
     val retrofit = Retrofit.Builder()

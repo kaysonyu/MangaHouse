@@ -27,7 +27,7 @@ class MangaAdapter (val context: Context, val mangaList: List<Manga>): RecyclerV
             val manga = mangaList[viewHolder.adapterPosition]
             val inent = Intent(context, MangaActivity::class.java).apply {
                 putExtra("comicId", manga.comicId)
-                putExtra("site", "dmzj")
+                putExtra("site", manga.site)
             }
             context.startActivity(inent)
         }

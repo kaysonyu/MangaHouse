@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 
 class MySQLiteOpenHelper(context: Context?) : SQLiteOpenHelper(context,
@@ -11,6 +12,9 @@ class MySQLiteOpenHelper(context: Context?) : SQLiteOpenHelper(context,
     DB_VERSION
 ) {
     override fun onCreate(db: SQLiteDatabase) {
+        val sqlStrSite = "CREATE TABLE IF NOT EXISTS sites (site TEXT, source_name TEXT, PRIMARY KEY(site));"
+        db.execSQL(sqlStrSite)
+
         val sqlStrRecord = "CREATE TABLE IF NOT EXISTS records (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT);"
         db.execSQL(sqlStrRecord)
 

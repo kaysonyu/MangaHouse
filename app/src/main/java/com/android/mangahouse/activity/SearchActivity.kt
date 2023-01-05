@@ -3,7 +3,7 @@ package com.android.mangahouse.activity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.SearchView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.mangahouse.request.ComicResp
@@ -12,7 +12,10 @@ import com.android.mangahouse.R
 import com.android.mangahouse.request.ServiceCreator
 import com.android.mangahouse.adapter.SearchResultAdapter
 import com.android.mangahouse.custom_components.OnItemClickListener
+import com.android.mangahouse.fragment.SourceSiteDialogFragment
 import com.android.mangahouse.sql.RecordsDao
+import com.android.mangahouse.sql.SitesDao
+import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.activity_search.flHistory
 import retrofit2.Call
@@ -21,6 +24,7 @@ import retrofit2.Response
 
 class SearchActivity : AppCompatActivity() {
     private val recordsDao: RecordsDao = RecordsDao(this)
+    private val sitesDao: SitesDao = SitesDao(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,24 +33,13 @@ class SearchActivity : AppCompatActivity() {
         setSupportActionBar(searchToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        recordsDao.addRecords("测试")
         val historyRecords = recordsDao.getAll().reversed()
-//        flHistory.setTextList(historyRecords)
         flHistory.setList(historyRecords)
         flHistory.setOnItemClickListener (object : OnItemClickListener {
             override fun onClick(str: String) {
                 searchView.setQuery(str, true)
             }
         })
-//        Log.d("hhhh", historyRecords.size.toString())
-//        if (historyRecords.size > 0) {
-//            flHistory.setTextList(historyRecords)
-//        }
-
-
-//        val historySearch = listOf("")
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, historySearch)
-//        listView.adapter = adapter
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(str: String?): Boolean {
@@ -72,27 +65,12 @@ class SearchActivity : AppCompatActivity() {
 
         }
 
-//        flHistory.setOnLongClickListener {
-//            Log.d("11111", "hhh")
-//            false
-//        }
 
-//        flHistory.setOnClickItemListener { _, text ->
-//            searchView.setQuery(text, true)
-//        }
-
-
-//        searchView.setOnQueryTextFocusChangeListener(object : View.OnFocusChangeListener {
-//            override fun onFocusChange(v: View?, hasFocus: Boolean) {
-//                Log.d("uuuu", "hhhhh")
-//                if (flHistory.visibility == View.GONE) {
-//                    Log.d("uuuu", "hhhhh")
-//
-//                }
-//
-//            }
-//
-//        })
+        source_site_button.setOnClickListener {
+            val fragmentManager = supportFragmentManager
+            val sourceSiteDialogFragment = SourceSiteDialogFragment()
+            sourceSiteDialogFragment.show(fragmentManager, "source_site_dialog")
+        }
     }
 
 
@@ -130,12 +108,28 @@ class SearchActivity : AppCompatActivity() {
 //    }
 
     private fun submitSearch(name: String) {
+        val sitesList = sitesDao.getAll()
+        var site: String = ""
+        if (sitesList.size == 0) {
+            site = "dmzj"
+        }
+        else {
+            for (i in sitesList.indices) {
+                if (i == sitesList.size - 1) {
+                    site += sitesList[i].site
+                }
+                else {
+                    site += "${sitesList[i].site},"
+                }
+            }
+        }
+
         val searchRespService =
             ServiceCreator.create(
                 ComicSearchService::class.java)
         val that = this
 
-        searchRespService.getComicResp(name).enqueue(object : Callback<ComicResp> {
+        searchRespService.getComicResp(name, site).enqueue(object : Callback<ComicResp> {
             override fun onResponse(call: Call<ComicResp>, response: Response<ComicResp>) {
                 val comicResp = response.body()
                 if (comicResp != null) {
@@ -144,7 +138,7 @@ class SearchActivity : AppCompatActivity() {
                     val adapter =
                         SearchResultAdapter(
                             that,
-                            comicResp.search_result
+                            comicResp.list
                         )
                     searchResultView.adapter = adapter
                     searchResultView.visibility = View.VISIBLE
@@ -167,10 +161,6 @@ class SearchActivity : AppCompatActivity() {
         })
 
     }
-
-
-
-
 
 
 }

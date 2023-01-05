@@ -62,7 +62,8 @@ class MangaActivity : AppCompatActivity() {
 //                }
 //
 //            })
-            searchRespService.getComicChapterResp(comicId).enqueue(object : Callback<ComicChapterResp> {
+            Log.e("???", "$site, $comicId")
+            searchRespService.getComicChapterResp(site, comicId).enqueue(object : Callback<ComicChapterResp> {
                 override fun onResponse(call: Call<ComicChapterResp>, response: Response<ComicChapterResp>) {
                     val comicResp = response.body()
                     if (comicResp != null) {
@@ -75,6 +76,7 @@ class MangaActivity : AppCompatActivity() {
                             ChapterAdapter(
                                 that,
                                 comicResp.comicid,
+                                comicResp.site,
                                 comicResp.chapters
                             )
                         chapterRecycleView.adapter = adapter
@@ -126,7 +128,7 @@ class MangaActivity : AppCompatActivity() {
             continueRead.setOnClickListener {
                 val mangaQuery = mangasDao.getManga(Manga(site, comicId, "", "", 1, 1))
                 val inent = Intent(this, ReadActivity::class.java).apply {
-                    putExtra("site", "dmzj")
+                    putExtra("site", mangaQuery.site)
                     putExtra("comicId", mangaQuery.comicId)
                     putExtra("chapterId", mangaQuery.chapterNum)
                 }

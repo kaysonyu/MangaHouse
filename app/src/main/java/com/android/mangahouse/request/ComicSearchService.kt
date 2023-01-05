@@ -19,13 +19,17 @@ interface ComicSearchService {
 //    @GET("comicContent/search/{chapterId}")
 //    fun getComicContentResp(@Path("chapterId") chapterId: String): Call<ComicContentResp>
 
-    @GET("search")
-    fun getComicResp(@Query("name") name:String): Call<ComicResp>
+    @GET("/aggregate/search")
+    fun getComicResp(@Query("name") name:String, @Query("site") site:String): Call<ComicResp>
 
-    @GET("comic/{comicId}")
-    fun getComicChapterResp(@Path("comicId") comicId: String): Call<ComicChapterResp>
+    @GET("/api/{site}/comic/{comicId}")
+    fun getComicChapterResp(@Path("site") site: String, @Path("comicId") comicId: String): Call<ComicChapterResp>
 
-    @GET("comic/{comicId}/{chapterNumber}")
-    fun getComicContentResp(@Path("comicId") comicId: String, @Path("chapterNumber") chapterNumber: Int): Call<ComicContentResp>
+    @GET("/api/{site}/comic/{comicId}/{chapterNumber}")
+    fun getComicContentResp(@Path("site") site: String, @Path("comicId") comicId: String, @Path("chapterNumber") chapterNumber: Int): Call<ComicContentResp>
+
+    @GET("/crawler/config")
+    fun getAllSites(): Call<ComicSiteResp>
+
 
 }

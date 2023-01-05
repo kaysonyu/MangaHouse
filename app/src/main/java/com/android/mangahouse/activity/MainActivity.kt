@@ -24,6 +24,7 @@ import androidx.core.content.FileProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.android.mangahouse.R
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 //        Log.d("uuuu", "${this.resources.displayMetrics.density}, ${resources.displayMetrics.widthPixels}")
 
+        //首页导航页面切换
         val navController = findNavController(R.id.navHostFragment)
         bottomNavView.setupWithNavController(navController)
 
@@ -89,6 +91,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //        getdatabt.setOnClickListener {
 //            startActivity(Intent(this, TestActivity::class.java))
 //        }
+
+        //侧边栏配置
         val navHeaderIcon = navView.getHeaderView(0).findViewById<ImageView>(R.id.iconImage)
         outputImage = File(externalCacheDir, profilePic)
         imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -100,6 +104,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (outputImage.exists()) {
             val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
             navHeaderIcon.setImageBitmap(bitmap)
+        }
+        else {
+            Glide.with(this).load(R.drawable.nav_icon).into(navHeaderIcon)
         }
 
 

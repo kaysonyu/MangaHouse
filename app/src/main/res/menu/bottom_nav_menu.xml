@@ -7,8 +7,8 @@
         android:id="@+id/recommend"
         android:icon="@drawable/bottom_nav_recommend"
         android:title="Recommend" />
-    <item
-        android:id="@+id/local"
-        android:icon="@drawable/bottom_nav_local"
-        android:title="Local" />
+<!--    <item-->
+<!--        android:id="@+id/local"-->
+<!--        android:icon="@drawable/bottom_nav_local"-->
+<!--        android:title="Local" />-->
 </menu>

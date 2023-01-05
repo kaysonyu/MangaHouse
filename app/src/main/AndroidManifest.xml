@@ -15,7 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.SettingsActivity"></activity>
-        <activity android:name=".adapter.ChapterAdapter" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.ReadActivity" />
         <activity
