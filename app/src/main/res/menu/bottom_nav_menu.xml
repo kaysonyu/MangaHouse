@@ -2,11 +2,11 @@
     <item
         android:id="@+id/subscribe"
         android:icon="@drawable/bottom_nav_subscribe"
-        android:title="Subscribe" />
+        android:title="" />
     <item
         android:id="@+id/recommend"
         android:icon="@drawable/bottom_nav_recommend"
-        android:title="Recommend" />
+        android:title="" />
 <!--    <item-->
 <!--        android:id="@+id/local"-->
 <!--        android:icon="@drawable/bottom_nav_local"-->

@@ -31,5 +31,9 @@ interface ComicSearchService {
     @GET("/crawler/config")
     fun getAllSites(): Call<ComicSiteResp>
 
+    @GET("/api/{site}/tags")
+    fun getAllTags(@Path("site") site: String): Call<ComicTagResp>
 
+    @GET("/api/{site}/list")
+    fun getComicByTags(@Path("site") site: String, @Query("tag") tag:String): Call<ComicResp>
 }

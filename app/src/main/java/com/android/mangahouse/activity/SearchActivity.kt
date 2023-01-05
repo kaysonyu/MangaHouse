@@ -25,6 +25,7 @@ import retrofit2.Response
 class SearchActivity : AppCompatActivity() {
     private val recordsDao: RecordsDao = RecordsDao(this)
     private val sitesDao: SitesDao = SitesDao(this)
+    var searchResultList = ArrayList<ComicResp.Data>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,15 @@ class SearchActivity : AppCompatActivity() {
 
         setSupportActionBar(searchToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val layoutManager = LinearLayoutManager(this)
+        searchResultView.layoutManager = layoutManager
+        val adapter =
+            SearchResultAdapter(
+                this,
+                searchResultList
+            )
+        searchResultView.adapter = adapter
 
         val historyRecords = recordsDao.getAll().reversed()
         flHistory.setList(historyRecords)
@@ -45,7 +55,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(str: String?): Boolean {
                 if (str != null) {
 //                    submitSearch("title", str)
-                    submitSearch(str)
+                    submitSearch(str, adapter)
                 }
                 return false
             }
@@ -107,7 +117,7 @@ class SearchActivity : AppCompatActivity() {
 //
 //    }
 
-    private fun submitSearch(name: String) {
+    private fun submitSearch(name: String, adapter: SearchResultAdapter) {
         val sitesList = sitesDao.getAll()
         var site: String = ""
         if (sitesList.size == 0) {
@@ -123,7 +133,7 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
         }
-
+        searchResultList.clear()
         val searchRespService =
             ServiceCreator.create(
                 ComicSearchService::class.java)
@@ -133,14 +143,11 @@ class SearchActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ComicResp>, response: Response<ComicResp>) {
                 val comicResp = response.body()
                 if (comicResp != null) {
-                    val layoutManager = LinearLayoutManager(that)
-                    searchResultView.layoutManager = layoutManager
-                    val adapter =
-                        SearchResultAdapter(
-                            that,
-                            comicResp.list
-                        )
-                    searchResultView.adapter = adapter
+                    comicResp.list.forEach {
+                        searchResultList.add(it)
+                    }
+                    adapter.notifyDataSetChanged()
+
                     searchResultView.visibility = View.VISIBLE
 
                     if (recordsDao.isHasRecord(name)) {

@@ -9,6 +9,7 @@ import com.android.mangahouse.R
 import com.android.mangahouse.`object`.Manga
 import com.android.mangahouse.adapter.PictureAdapter
 import com.android.mangahouse.request.ComicContentResp
+import com.android.mangahouse.request.ComicResp
 import com.android.mangahouse.request.ComicSearchService
 import com.android.mangahouse.request.ServiceCreator
 import com.android.mangahouse.sql.MangasDao
@@ -19,51 +20,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-//class ReadActivity : AppCompatActivity() {
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_read)
-//
-//        val chapterId = intent.getStringExtra("chapterId")
-//
-//
-//
-//        val searchRespService = ServiceCreator.create(ComicSearchService::class.java)
-//        if (chapterId != null) {
-//            val that = this
-//            searchRespService.getComicContentResp(chapterId).enqueue(object : Callback<ComicContentResp> {
-//                override fun onResponse(call: Call<ComicContentResp>, response: Response<ComicContentResp>) {
-//                    val comicResp = response.body()
-//                    if (comicResp != null) {
-//                        for (list in comicResp.data)
-//                            Log.d("yuyuyu", "--${list}--")
-//
-////                        Glide.with(that).load(comicResp.data.get(3)).into(test_)
-////                        tttt.text = comicResp.data.get(3)
-//
-//                        val layoutManager = GridLayoutManager(that, 1)
-//                        contentRecycleView.layoutManager = layoutManager
-//                        val adapter = PictureAdapter(that, comicResp.data)
-//                        contentRecycleView.adapter = adapter
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<ComicContentResp>, t: Throwable) {
-//                    t.printStackTrace()
-//                }
-//
-//            })
-//        }
-//    }
-//
-//
-//}
-
 class ReadActivity : AppCompatActivity() {
     var site: String? = null
     var comicId: String? = null
     var chapterId: Int = 1
+    var imageUrlList = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read)
@@ -76,6 +37,13 @@ class ReadActivity : AppCompatActivity() {
         val comicId = comicId
         val chapterId = chapterId
 
+        val adapter =
+            PictureAdapter(
+                this,
+                imageUrlList
+            )
+        readView.adapter = adapter
+
         val searchRespService = ServiceCreator.create(ComicSearchService::class.java)
         if (site != null && comicId != null) {
             val that = this
@@ -83,13 +51,10 @@ class ReadActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<ComicContentResp>, response: Response<ComicContentResp>) {
                     val comicResp = response.body()
                     if (comicResp != null) {
-
-                        val adapter =
-                            PictureAdapter(
-                                that,
-                                comicResp.image_urls
-                            )
-                        readView.adapter = adapter
+                        comicResp.image_urls.forEach {
+                            imageUrlList.add(it)
+                        }
+                        adapter.notifyDataSetChanged()
 
                         val mangasDao = MangasDao(that)
                         val mangaQuery = mangasDao.getManga(Manga(site, comicId, "", "", 1, 1))

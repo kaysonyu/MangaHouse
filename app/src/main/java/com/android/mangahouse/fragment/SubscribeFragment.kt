@@ -68,50 +68,6 @@ class SubscribeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        setHasOptionsMenu(true)
-//        val mActivity = activity as AppCompatActivity
-//        mActivity.setSupportActionBar(toolbar)
-//        toolbar.inflateMenu(R.menu.nav_menu)
-//        toolbar.setOnMenuItemClickListener {
-////                when(it.itemId) {
-////                    android.R.id.home -> {
-////                        drawerLayout.openDrawer(GravityCompat.START)
-////                    }
-////                }
-//                true
-//            }
-//        toolbar.setTitle("111")
-
-//        val actionBar: ActionBar? = mActivity.supportActionBar
-//        actionBar?.let {
-//            it.setDisplayHomeAsUpEnabled(true)
-//            it.setHomeAsUpIndicator(R.drawable.ic_menu)
-//        }
-
-//        navView.setNavigationItemSelectedListener {
-//            drawerLayout.closeDrawers()
-//            true
-//        }
-
-
-//        initManga()
-//        val layoutManager = GridLayoutManager(context, 3)
-//        recycleView.layoutManager = layoutManager
-//        val adapter = MangaAdapter(mActivity, mangaList)
-//        recycleView.adapter = adapter
-//
-//        swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
-//        swipeRefresh.setOnRefreshListener {
-//            thread {
-//                Thread.sleep(2000)
-//                activity?.runOnUiThread {
-//                    initManga()
-//                    adapter.notifyDataSetChanged()
-//                    swipeRefresh.isRefreshing = false
-//                }
-//            }
-//        }
 
         return inflater.inflate(R.layout.fragment_subscribe, container, false)
     }

@@ -11,36 +11,7 @@ import com.android.mangahouse.request.ComicChapterResp
 import com.android.mangahouse.R
 import com.android.mangahouse.activity.ReadActivity
 
-//class ChapterAdapter (val context: Context, val chapterList: List<ComicChapterResp.Data.Chapter>): RecyclerView.Adapter<ChapterAdapter.ViewHolder>() {
-//    inner class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
-//        val chapterTitle: TextView = view.findViewById(R.id.chapterView)
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//        val viewHolder = ViewHolder(LayoutInflater.from(context).inflate(R.layout.chapter_item, parent, false))
-//
-//        viewHolder.itemView.setOnClickListener {
-//            val chapter = chapterList[viewHolder.adapterPosition]
-//            val inent = Intent(context, ReadActivity::class.java).apply {
-//                putExtra("chapterId", chapter.chapterId)
-//            }
-//            context.startActivity(inent)
-//        }
-//
-//        return viewHolder
-//    }
-//
-//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val chapter = chapterList[position]
-//        holder.chapterTitle.text = chapter.title
-////        Glide.with(context).load(manga.imageId).into(holder.mangaImage)
-//    }
-//
-//    override fun getItemCount() = chapterList.size
-//
-//}
-
-class ChapterAdapter (val context: Context, val comicId: String, val site: String, val chapterList: List<ComicChapterResp.Chapter>): RecyclerView.Adapter<ChapterAdapter.ViewHolder>() {
+class ChapterAdapter (val context: Context, val comicId: String?, val site: String?, val chapterList: List<ComicChapterResp.Chapter>): RecyclerView.Adapter<ChapterAdapter.ViewHolder>() {
     inner class ViewHolder (view: View): RecyclerView.ViewHolder(view) {
         val chapterTitle: TextView = view.findViewById(R.id.chapterView)
     }

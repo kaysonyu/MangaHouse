@@ -58,40 +58,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val navController = findNavController(R.id.navHostFragment)
         bottomNavView.setupWithNavController(navController)
 
-
-//        getdatabt.setOnClickListener {
-//            val searchRespService = ServiceCreator.create(ComicSearchService::class.java)
-//
-//            searchRespService.getComicResp("title", "校园").enqueue(object : Callback<ComicResp> {
-//
-//                override fun onResponse(call: Call<ComicResp>, response: Response<ComicResp>) {
-//                    val app = response.body()
-//                    if (app != null) {
-//                        Log.d("TestTest", "id is ${app.msg}, name is ${app.code}, version is ${app.count}")
-//                        for (list in app.data) {
-//                            Log.d("TestTest", "${list.author}-${list.cover}-${list.title}")
-//                        }
-//                    }
-//
-//                }
-//
-//
-//                override fun onFailure(call: Call<ComicResp>, t: Throwable) {
-//                    Log.d("TestTest", "id is ")
-//                    t.printStackTrace()
-//                }
-//
-//            })
-//        }
-
-//        Glide.with(this)
-//            .load("https://image.mangabz.com/1/511/129538/3_6051.jpg?cid=129538&key=3dfee6cee5de9ec4fabe28e4f4789a65&uk=")
-//            .into(testImage)
-
-//        getdatabt.setOnClickListener {
-//            startActivity(Intent(this, TestActivity::class.java))
-//        }
-
         //侧边栏配置
         val navHeaderIcon = navView.getHeaderView(0).findViewById<ImageView>(R.id.iconImage)
         outputImage = File(externalCacheDir, profilePic)
@@ -144,17 +110,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.takePhotoView -> {
-//                if (outputImage.exists()) {
-//                    outputImage.delete()
-//                }
-//                outputImage.createNewFile()
-//
-//                imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                    FileProvider.getUriForFile(this, "com.android.mangahouse.photo", outputImage)
-//                } else {
-//                    Uri.fromFile(outputImage)
-//                }
-
                 val intent = Intent("android.media.action.IMAGE_CAPTURE")
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
                 startActivityForResult(intent, takePhoto)
@@ -207,20 +162,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 //
-
-//    private fun cropPhoto(uri: Uri?) {
-//
-//        val intent = Intent("com.android.camera.action.CROP")
-//        intent.setDataAndType(uri, "image/*")
-//        intent.putExtra("crop", "true");
-//        intent.putExtra("aspectX", 1);
-//        intent.putExtra("aspectY", 1);
-//        intent.putExtra("outputX", 150);
-//        intent.putExtra("outputY", 150);
-//        intent.putExtra("return-data", true);
-//
-//        startActivityForResult(intent, afterCrop);
-//    }
 
     private fun saveFile(f: File?, uri: Uri) {
         val fd = contentResolver.openFileDescriptor(uri, "r")

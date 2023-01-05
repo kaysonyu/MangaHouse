@@ -24,7 +24,8 @@ import retrofit2.Response
 
 
 class MangaActivity : AppCompatActivity() {
-    lateinit var manga: Manga;
+    lateinit var manga: Manga
+    var chapterList = ArrayList<ComicChapterResp.Chapter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,17 @@ class MangaActivity : AppCompatActivity() {
         val site = intent.getStringExtra("site")
         val comicId = intent.getStringExtra("comicId")
 
+        val layoutManager = GridLayoutManager(this, 3)
+        chapterRecycleView.layoutManager = layoutManager
+        val adapter =
+            ChapterAdapter(
+                this,
+                comicId,
+                site,
+                chapterList
+            )
+        chapterRecycleView.adapter = adapter
+
         val mangasDao = MangasDao(this)
 
         val searchRespService =
@@ -43,43 +55,17 @@ class MangaActivity : AppCompatActivity() {
                 ComicSearchService::class.java)
         if (site != null && comicId != null) {
             val that = this
-//            searchRespService.getComicChapterResp(comicId).enqueue(object : Callback<ComicChapterResp> {
-//                override fun onResponse(call: Call<ComicChapterResp>, response: Response<ComicChapterResp>) {
-//                    val comicResp = response.body()
-//                    if (comicResp != null) {
-//                        collapsingToolbarLayout.title = comicResp.data.title
-//                        Glide.with(that).load(comicResp.data.cover).into(detailImage)
-//
-//                        val layoutManager = GridLayoutManager(that, 3)
-//                        chapterRecycleView.layoutManager = layoutManager
-//                        val adapter = ChapterAdapter(that, comicResp.data.chapterList)
-//                        chapterRecycleView.adapter = adapter
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<ComicChapterResp>, t: Throwable) {
-//                    t.printStackTrace()
-//                }
-//
-//            })
-            Log.e("???", "$site, $comicId")
+
             searchRespService.getComicChapterResp(site, comicId).enqueue(object : Callback<ComicChapterResp> {
                 override fun onResponse(call: Call<ComicChapterResp>, response: Response<ComicChapterResp>) {
                     val comicResp = response.body()
                     if (comicResp != null) {
                         collapsingToolbarLayout.title = comicResp.name
                         Glide.with(that).load(comicResp.cover_image_url).into(detailImage)
-
-                        val layoutManager = GridLayoutManager(that, 3)
-                        chapterRecycleView.layoutManager = layoutManager
-                        val adapter =
-                            ChapterAdapter(
-                                that,
-                                comicResp.comicid,
-                                comicResp.site,
-                                comicResp.chapters
-                            )
-                        chapterRecycleView.adapter = adapter
+                        comicResp.chapters.forEach {
+                            chapterList.add(it)
+                        }
+                        adapter.notifyDataSetChanged()
 
                         manga = Manga(comicResp.site,
                                         comicResp.comicid,
@@ -101,9 +87,7 @@ class MangaActivity : AppCompatActivity() {
 //                    有->无
                     Snackbar.make(it, "取消订阅", Snackbar.LENGTH_SHORT)
                         .setAction("确定") {
-
                             mangasDao.deleteManga(manga)
-
                             Glide.with(this).load(R.drawable.ic_to_subscribe).into(subFab)
                             continueRead.visibility = View.GONE
 
@@ -147,24 +131,6 @@ class MangaActivity : AppCompatActivity() {
                 continueRead.visibility = View.GONE
             }
         }
-
-
-
-//        collapsingToolbarLayout.title = mangaName
-//        detailImage.setImageResource(mangaImage)
-
-//        catalogView.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, catalog)
-
-//        detail_swipeRefresh.setColorSchemeResources(R.color.colorPrimary)
-//        detail_swipeRefresh.setOnRefreshListener {
-//            thread {
-//                Thread.sleep(1000)
-//                runOnUiThread {
-//                    detail_swipeRefresh.isRefreshing = false
-//                }
-//            }
-//        }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

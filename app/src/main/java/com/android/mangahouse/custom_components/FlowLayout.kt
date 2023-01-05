@@ -25,28 +25,12 @@ class FlowLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context,
     fun setList(list: List<String>) {
         this.list = list
 
-//        val viewList = ArrayList<View>()
-//        list.forEach {
-//            val view = LayoutInflater.from(context).inflate(R.layout.record_item, null)
-//            val textView = view.findViewById<TextView>(R.id.recordText)
-//            textView.text = it
-//            viewList.add(view)
-//        }
-
         removeAllViews()
 
         var rowLayout = LinearLayout(context)
         addView(rowLayout)
 
         var len = 0
-//        for (view in viewList) {
-//            len += (px2dp(context, view.layoutParams.width) + 20)
-//            if (len > screenWidth - 50) {
-//                rowLayout = LinearLayout(context)
-//                addView(rowLayout)
-//
-//                len = px2dp(context, view.layoutParams.width) + 20
-//            }
         for (str in list) {
             len += str.length
 
@@ -69,16 +53,5 @@ class FlowLayout(context: Context, attrs: AttributeSet?) : LinearLayout(context,
         }
 
     }
-
-//    private fun dp2px(context: Context, dpValue: Int): Int
-//    {
-//        val scale = context.resources.displayMetrics.density
-//        return (dpValue * scale + 0.5f).toInt()
-//    }
-//
-//    private fun px2dp(context: Context, pxValue: Int): Int {
-//        val scale = context.resources.displayMetrics.density
-//        return (pxValue / scale + 0.5f).toInt()
-//    }
 
 }
