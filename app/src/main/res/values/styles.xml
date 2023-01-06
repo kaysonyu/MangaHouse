@@ -16,7 +16,12 @@
         <item name="itemIconSize">35dp</item>
     </style>
 
-<!--    <style name="NavigationDrawerStyle">-->
+    <style name="MyToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:background">#000</item>
+    </style>
+
+
+    <!--    <style name="NavigationDrawerStyle">-->
 <!--        <item name="android:layout_gravity">center</item>-->
 <!--        <item name="android:gravity">center_horizontal</item>-->
 <!--    </style>-->
